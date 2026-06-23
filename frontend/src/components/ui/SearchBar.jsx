@@ -1,6 +1,6 @@
 import { FaSearch } from "react-icons/fa";
 
-function SearchBar() {
+function SearchBar({placeholder}) {
   return (
     <>
       <FaSearch
@@ -9,7 +9,7 @@ function SearchBar() {
       />
 
       <input
-        placeholder="Buscar productos, recetas, ventas..."
+        placeholder={placeholder}
         className="
                         w-full
                         rounded-xl

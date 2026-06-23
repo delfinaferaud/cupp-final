@@ -7,20 +7,20 @@ import {
   FaCartShopping,
   FaChartSimple,
   FaGear,
-  FaBell,
-  FaChevronDown,
 } from 'react-icons/fa6';
-import { IoHelpCircle, IoPeople } from 'react-icons/io5';
-import { FaHome, FaSearch, FaSignOutAlt } from 'react-icons/fa';
-import { Outlet } from 'react-router-dom';
+import { IoMenu, IoPeople } from 'react-icons/io5';
+import { FaHome, FaSignOutAlt } from 'react-icons/fa';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import logotipo from '../../assets/logotipo.svg';
-import SearchBar from '../ui/SearchBar';
 
-function Sidebar() {
+function Sidebar({ isOpen, onClose }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const menu = [
     { icon: FaHome, label: 'Inicio' },
-    { icon: FaBoxArchive, label: 'Productos' },
-    { icon: FaEgg, label: 'Ingredientes', active: true },
+    { icon: FaBoxArchive, label: 'Productos', path: '/products' },
+    { icon: FaEgg, label: 'Ingredientes', path: '/ingredients' },
     { icon: FaBook, label: 'Recetas' },
     { icon: FaCalculator, label: 'Costos' },
     { icon: FaArrowTrendUp, label: 'Ventas' },
@@ -30,21 +30,47 @@ function Sidebar() {
     { icon: FaGear, label: 'Configuración' },
     { icon: FaSignOutAlt, label: 'Cerrar sesión' },
   ];
+
   return (
-    <div className="flex min-h-scree w-full bg-[#F6F1ED]">
-      <aside className="w-64 bg-[#F2EBE6] border-r border-[#DDD2CB] flex flex-col">
-        <div className="h-28 flex items-center justify-center border-b border-[#DDD2CB]">
-          <img src={logotipo} alt="Logo" className="h-8 w-auto" />
-        </div>
+    <aside
+      className={`
+    fixed top-0 left-0 z-50
+    h-screen w-64
+    bg-[#F2EBE6]
+    border-r border-[#DDD2CB]
+    flex flex-col
+    overflow-y-auto
 
-        <nav className="flex-1 px-4 py-6 space-y-2">
-          {menu.map((item) => {
-            const Icon = item.icon;
+    transition-transform duration-300
+    ${isOpen ? 'translate-x-0' : '-translate-x-full'}
 
-            return (
-              <button
-                key={item.label}
-                className={`
+    lg:static
+    lg:translate-x-0
+    lg:min-h-screen
+    lg:h-auto
+    lg:overflow-visible
+  `}
+    >
+      <div className="h-28 shrink-0  flex items-center px-5 gap-3 lg:justify-center border-b border-[#DDD2CB]">
+        <button onClick={onClose} className="lg:hidden p-2">
+          <IoMenu size={30} />
+        </button>
+        <img src={logotipo} alt="Logo" className="h-10 w-auto object-contain" />
+      </div>
+
+      <nav className="flex-1 px-4 py-4 space-y-1">
+        {menu.map((item) => {
+          const isActive = location.pathname === item.path;
+          const Icon = item.icon;
+
+          return (
+            <button
+              key={item.label}
+              onClick={() => {
+                navigate(item.path);
+                onClose?.();
+              }}
+              className={`
                   w-full
                   flex
                   items-center
@@ -54,77 +80,26 @@ function Sidebar() {
                   rounded-xl
                   transition
                   ${
-                    item.active
+                    isActive
                       ? 'bg-[#B8C7AF] text-[#334C68]'
                       : 'hover:bg-[#E7DDD6] text-[#334C68]'
                   }
                 `}
-              >
-                <Icon size={18} />
-                <span>{item.label}</span>
-              </button>
-            );
-          })}
-        </nav>
-        <div className="mx-4 mb-5 rounded-3xl bg-[#F3DDD6] p-5">
-          <h3 className="font-semibold">Plan profesional</h3>
-
-          <p className="text-sm text-gray-500 mt-1">Tu plan actual</p>
-
-          <button className="text-sm underline mt-2">Ver detalles</button>
-        </div>
-      </aside>
-      <div className="flex flex-col flex-1">
-        {/* Topbar */}
-        <header className="h-28 bg-[#F8F5F2] border-b border-[#DDD2CB] flex items-center justify-between px-10">
-          {/* Search */}
-          <div className="relative w-105">
-            <SearchBar/>
-          </div>
-
-          {/* Right */}
-          <div className="flex items-center gap-4">
-            <button>
-              <FaBell size={22} className="text-[#334C68]" />
+            >
+              <Icon size={18} />
+              <span>{item.label}</span>
             </button>
-            <button>
-              <IoHelpCircle size={30} className="text-[#334C68]" />
-            </button>
+          );
+        })}
+      </nav>
+      <div className="mx-4 mb-5 mt-auto shrink-0 rounded-3xl bg-[#F3DDD6] p-5">
+        <h3 className="font-semibold">Plan profesional</h3>
 
-            <div className="flex items-center gap-3">
-              <div
-                className="
-                  h-12
-                  w-12
-                  rounded-full
-                  bg-[#334C68]
-                  text-white
-                  flex
-                  items-center
-                  justify-center
-                  font-semibold
-                "
-              >
-                N
-              </div>
+        <p className="text-sm text-gray-500 mt-1">Tu plan actual</p>
 
-              <div>
-                <p className="font-semibold leading-none">Nanu Bakery</p>
-
-                <p className="text-sm text-gray-500">Mi emprendimiento</p>
-              </div>
-
-              <FaChevronDown size={18} className="text-gray-500" />
-            </div>
-          </div>
-        </header>
-
-        {/* Content */}
-        <main className="flex-1 overflow-auto px-10 py-8">
-          <Outlet />
-        </main>
+        <button className="text-sm underline mt-2">Ver detalles</button>
       </div>
-    </div>
+    </aside>
   );
 }
 

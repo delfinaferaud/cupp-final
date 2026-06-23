@@ -1,16 +1,44 @@
 import { Routes, Route } from 'react-router-dom';
+import RegisterPage from '../pages/auth/RegisterPage';
+import LoginPage from '../pages/auth/LoginPage';
 import IngredientsPage from '../pages/ingredients/IngredientsPage';
-import IngredientsCard from '../pages/ingredients/IngredientsCard';
-import IngredientsForm from '../pages/ingredients/IngredientsForm';
 import Sidebar from '../components/layout/Sidebar';
+import Layout from '../components/layout/Layout';
+import ProductsPage from '../pages/products/ProductsPage';
+import ProductDetail from '../pages/products/ProductDetail';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<Sidebar />}>
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <PublicRoute>
+            <RegisterPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/"
+        element={
+          <PrivateRoute>
+            <Layout />
+          </PrivateRoute>
+        }
+      >
         <Route path="ingredients" element={<IngredientsPage />} />
-        <Route path="ingredients/:id" element={<IngredientsCard />} />
-        <Route path="ingredients/edit/:id" element={<IngredientsForm />} />
+        <Route path="products" element={<ProductsPage />} />
+        <Route path="products/:id" element={<ProductDetail />} />
       </Route>
     </Routes>
   );
