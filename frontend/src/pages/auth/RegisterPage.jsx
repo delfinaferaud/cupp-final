@@ -6,49 +6,30 @@ import AuthLayout from '../../components/layout/AuthLayout';
 import AuthCard from '../../components/layout/AuthCard';
 import AuthInput from '../../components/ui/AuthInput';
 import AuthButton from '../../components/ui/AuthButton';
+import { useRegisterForm } from '../../hooks/useRegisterForm';
 
 function RegisterPage() {
-  const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
-
-  const [errors, setErrors] = useState({});
-  const [generalError, setGeneralError] = useState('');
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      setErrors({});
-      setGeneralError('');
-
-      await register(form);
-
-      navigate('/login');
-    } catch (error) {
-      const data = error.response?.data;
-
-      setErrors(data?.errors || {});
-      setGeneralError(data?.message || 'Error al registrarse');
-    }
-  };
+  const {
+    form,
+    errors,
+    generalError,
+    handleChange,
+    handleSubmit
+  } = useRegisterForm();
 
   return (
    <AuthLayout>
-      <AuthCard title="Crear cuenta" footer="">
+      <AuthCard title="Crear cuenta" footer={
+    <>
+      ¿Ya tenés cuenta?{' '}
+      <Link
+        to="/login"
+        className="font-semibold text-[#334C68]"
+      >
+        Iniciar sesión
+      </Link>
+    </>
+  }>
         
         <form onSubmit={handleSubmit} className="space-y-5">
             

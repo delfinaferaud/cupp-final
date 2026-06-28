@@ -5,11 +5,28 @@ import {
   DialogPanel,
   DialogTitle,
 } from '@headlessui/react';
+import { GoAlertFill } from "react-icons/go";
 
-function Modal({ open, ingredient, onClose, onConfirm }) {
+function Modal({ open, item, ingredient, onClose, onConfirm, type = 'ingredient' }) {
+  const labels = {
+  ingredient: {
+    singular: 'ingrediente',
+    title: 'Eliminar ingrediente',
+    nameKey: 'name',
+  },
+  product: {
+    singular: 'producto',
+    title: 'Eliminar producto',
+    nameKey: 'product',
+  },
+};
+
+const current = labels[type];
+
+const itemName = item?.[current.nameKey];
   return (
     
-      <Dialog open={open}  className="relative z-10">
+      <Dialog open={open} onClose={onClose} className="relative z-50">
         <DialogBackdrop
           transition
           className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
@@ -21,39 +38,28 @@ function Modal({ open, ingredient, onClose, onConfirm }) {
               transition
               className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95"
             >
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div className="bg-[#fdfbf9] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
-                  <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10 ">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                  <div className="mx-auto flex size-12 shrink-0 justify-center sm:mx-0 sm:size-10 ">
+                    <GoAlertFill size={23}/>
                   </div>
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                     <DialogTitle
                       as="h3"
                       className="text-base font-semibold text-gray-900 "
                     >
-                      Eliminar ingrediente
+                      {current.title}
                     </DialogTitle>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500 ">
-                        ¿Seguro que querés eliminar{" "}
-                  <b>{ingredient?.name}</b>? Esta acción no se puede deshacer.
+                        ¿Seguro que querés eliminar este {current.singular}{' '}
+                      <b>{itemName}</b>? Esta acción no se puede deshacer.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 ">
+              <div className="bg-[#F6F1ED] px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 ">
                 <button
                   type="button"
                   onClick={onConfirm}
@@ -65,7 +71,7 @@ function Modal({ open, ingredient, onClose, onConfirm }) {
                   type="button"
                   data-autofocus
                   onClick={onClose}
-                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto "
+                  className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs  hover:bg-gray-50 sm:mt-0 sm:w-auto "
                 >
                   Cancelar
                 </button>

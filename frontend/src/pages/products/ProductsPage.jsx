@@ -1,125 +1,102 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { createProduct, deleteProduct, getProducts, updateProduct } from '../../services/productService';
 import Table from '../../components/layout/Table';
-import ActionsButtons from '../../components/ui/ActionsButtons';
 import ModalForm from '../../components/layout/ModalForm';
+import Modal from '../../components/layout/Modal';
+import { formatPrice } from '../../utils/pricing';
+import { useProductsPage } from '../../hooks/useProductsPage';
+import ProductRow from '../../components/layout/ProductRow';
 
 function ProductsPage() {
-  const [products, setProducts] = useState([]);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const navigate = useNavigate();
-  const columns = ['Producto', 'Categoría', 'Costo', 'Acciones'];
+  const {
+    products,
+    selectedProduct,
 
-  useEffect(() => {
-    loadProducts();
-  }, []);
+    isCreateOpen,
+    isEditOpen,
+    isDeleteOpen,
 
-  const loadProducts = async () => {
-    try {
-      const data = await getProducts();
-      setProducts(data);
-    } catch (error) {
-      console.error('Error al obtener productos: ', error);
-    }
-  };
+    toast,
 
-  const handleCreateClick = () => {
-    setIsCreateModalOpen(true);
-  };
+    openCreate,
+    openEdit,
+    openDelete,
+    closeModal,
+    closeToast,
 
-  const handleNewProduct = async (formData) => {
-    await createProduct(formData);
+    handleViewProduct,
+    handleNewProduct,
+    handleConfirmEdit,
+    handleConfirmDelete,
+  } = useProductsPage();
 
-    setIsCreateModalOpen(false);
-    loadProducts();
-  }
-
-  const handleEditClick = (product) => {
-    setSelectedProduct(product);
-    setIsEditModalOpen(true);
-  };
-
-  const handleConfirmEdit = async (formData) => {
-    try {
-        await updateProduct(selectedProduct._id, formData);
-
-        setIsEditModalOpen(false);
-        setSelectedProduct(null); 
-        loadProducts();
-    } catch (error) {
-        console.error('Error al editar producto', error);
-    }
-  }
-
-  const handleDeleteClick = (product) => {
-    setSelectedProduct(product);
-    setIsDeleteModalOpen(true);
-  };
-
-  const handleConfirmDelete = async () => {
-    try {
-        await deleteProduct(selectedProduct._id);
-        setIsDeleteModalOpen(false);
-        setSelectedProduct(null); 
-        loadProducts();
-    } catch (error) {
-        console.error('Error al eliminar el producto', error);
-    }
-  }
+  const columns = [
+    'Producto',
+    'Categoría',
+    'Costo (ARS)',
+    'Precio (ARS)',
+    'Acciones',
+  ];
 
   const renderProducts = (product) => (
-    <tr
+    <ProductRow
       key={product._id}
-      className="border-b border-[#DDD2CB] last:border-none text-center"
-    >
-      <td className="px-8 py-10">{product.product}</td>
-      <td className="px-8 py-10">{product.category}</td>
-      <td className="px-8 py-10">$20000</td>
-      <td className="px-8">
-        <ActionsButtons 
-            onView={() => navigate(`/products/${product._id}`)} 
-            onEdit={() => handleEditClick(product)}
-            onDelete={() => handleDeleteClick(product)}
-        />
-      </td>
-    </tr>
+      product={product}
+      onView={handleViewProduct}
+      onEdit={openEdit}
+      onDelete={openDelete}
+    />
   );
 
   return (
     <>
       <h2>Productos</h2>
-      <p>Gestioná todos los productos de tu inventario.</p>
+      <p>Gestioná todos los productos de tu inventario.</p> 
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={closeToast}
+        />
+      )}
+
       <Table
         columns={columns}
         renderRow={renderProducts}
         data={products}
         type="producto"
         typeSearch="Buscar producto..."
-        onCreate={handleCreateClick}
-        showCategories={true}
+        onCreate={openCreate}
+        showCategories={true} 
       />
 
-      {isCreateModalOpen && (
+      {isCreateOpen && (
         <ModalForm
-        open={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-        formType="Agregar nuevo producto"
-        initialValues={null}
-        onSubmit={handleNewProduct}
+          open={isCreateOpen}
+          onClose={closeModal}
+          formType="Agregar nuevo producto"
+          initialValues={null}
+          onSubmit={handleNewProduct}
+          formEntity="product"
         />
       )}
 
-      {isEditModalOpen && (
-        <ModalForm 
-            open={isEditModalOpen}
-            onClose={() => setIsEditModalOpen(false)}
-            formType="Editar producto"
-            initialValues={selectedProduct}
-            onSubmit={handleConfirmEdit}
+      {isEditOpen && (
+        <ModalForm
+          open={isEditOpen}
+          onClose={closeModal}
+          formType="Editar producto"
+          initialValues={selectedProduct}
+          onSubmit={handleConfirmEdit}
+          formEntity="product"
+        />
+      )}
+
+      {isDeleteOpen && (
+        <Modal
+          open={isDeleteOpen}
+          item={selectedProduct}
+          onClose={closeModal}
+          onConfirm={handleConfirmDelete}
+          type="product"
         />
       )}
     </>

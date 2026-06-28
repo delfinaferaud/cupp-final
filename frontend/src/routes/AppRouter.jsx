@@ -8,10 +8,17 @@ import ProductsPage from '../pages/products/ProductsPage';
 import ProductDetail from '../pages/products/ProductDetail';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import LandingPage from '../pages/LandingPage';
 
 function AppRouter() {
   return (
     <Routes>
+      <Route
+        path="/landing"
+        element={
+            <LandingPage />
+        }
+      />
       <Route
         path="/login"
         element={

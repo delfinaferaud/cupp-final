@@ -41,4 +41,4 @@ export const getMeasureType = (measure) => {
   if (unit.includes(measure)) return "unit";
 
   return null;
-}; 
+};

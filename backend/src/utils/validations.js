@@ -1,25 +1,34 @@
-import { getMeasureType } from "./calculations.js";
+
+import { getMeasureType } from '../../../frontend/src/utils/productCalculations.js';
 import Ingredient from '../models/Ingredient.js';
 
 export const validateRepeatedIngredients = (ingredients = []) => {
-  const ingredientIds = ingredients.map((item) => item.ingredient.toString());
+  const ingredientIds = ingredients
+    .map((item) => item.ingredient)
+    .filter(Boolean);
 
   const uniqueIds = new Set(ingredientIds);
 
   if (ingredientIds.length !== uniqueIds.size) {
     const error = new Error(
-      'No se puede repetir el mismo ingrediente en un producto',
+      'No se puede repetir el mismo ingrediente en un producto'
     );
+
     error.statusCode = 400;
     error.errors = {
       ingredients: 'No se puede repetir el mismo ingrediente en un producto',
     };
+
     throw error;
   }
 };
 
 export const validateIngredientsExist = async (ingredients = []) => {
-  const ingredientIds = ingredients.map((item) => item.ingredient);
+  const ingredientIds = ingredients
+    .map((item) => item.ingredient)
+    .filter(Boolean);
+
+  if (ingredientIds.length === 0) return;
 
   const foundIngredients = await Ingredient.find({
     _id: { $in: ingredientIds },
@@ -27,10 +36,12 @@ export const validateIngredientsExist = async (ingredients = []) => {
 
   if (foundIngredients.length !== ingredientIds.length) {
     const error = new Error('Uno o más ingredientes no existen');
+
     error.statusCode = 400;
     error.errors = {
       ingredients: 'Uno o más ingredientes no existen',
     };
+
     throw error;
   }
 };
@@ -44,7 +55,7 @@ export const validateCompatibleMeasures = (product) => {
 
     if (ingredientMeasureType !== neededMeasureType) {
       const error = new Error(
-        `La unidad de ${ingredient.name} no es compatible`
+        `La unidad de ${ingredient.name} no es compatible`,
       );
 
       error.statusCode = 400;

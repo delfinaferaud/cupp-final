@@ -2,6 +2,11 @@ import mongoose from 'mongoose';
 
 const ingredientSchema = new mongoose.Schema(
   {
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     name: {
       type: String,
       required: [true, 'El nombre es obligatorio'],
@@ -10,7 +15,8 @@ const ingredientSchema = new mongoose.Schema(
     quantity: {
       type: Number,
       required: [true, 'La cantidad es obligatoria'],
-      min: 0,
+      min: [0, "No puede ser negativo"],
+      cast: 'Por favor, ingresá un número',
     },
     measure: {
       type: String,
@@ -21,6 +27,7 @@ const ingredientSchema = new mongoose.Schema(
       type: Number,
       required: [true, 'El precio es obligatorio'],
       min: [0, 'No puede ser negativo'],
+      cast: 'Por favor, ingresá un número',
     },
   },
   {

@@ -7,8 +7,9 @@ import {
 } from '../utils/validations.js';
 import { calculateProductCost } from '../utils/calculations.js';
 
-export const getProducts = async () => {
-  const products = await Product.find()
+
+export const getProducts = async (userId) => {
+  const products = await Product.find({ owner: userId })
     .populate('ingredients.ingredient')
     .sort({ createdAt: -1 });
 
@@ -23,13 +24,15 @@ export const getProducts = async () => {
   });
 };
 
-export const getProductById = async (id) => {
-  const product = await Product.findById(id).populate('ingredients.ingredient');
+export const getProductById = async (id, userId) => {
+  const product = await Product.findOne({
+    _id: id,
+    owner: userId,
+  }).populate('ingredients.ingredient');
 
   if (!product) return null;
 
   validateCompatibleMeasures(product);
-
   const cost = calculateProductCost(product);
 
   return {
@@ -38,23 +41,38 @@ export const getProductById = async (id) => {
   };
 };
 
-export const createProduct = async (productData) => {
+export const createProduct = async (productData, userId) => {
   validateRepeatedIngredients(productData.ingredients);
   await validateIngredientsExist(productData.ingredients);
-  return await Product.create(productData);
+
+  return await Product.create({
+    ...productData,
+    owner: userId,
+  });
 };
 
-export const updateProduct = async (id, productData) => {
+export const updateProduct = async (id, productData, userId) => {
   if (productData.ingredients) {
     validateRepeatedIngredients(productData.ingredients);
     await validateIngredientsExist(productData.ingredients);
   }
-  return await Product.findByIdAndUpdate(id, productData, {
-    new: true,
-    runValidators: true,
-  }).populate('ingredients.ingredient');
+
+  return await Product.findOneAndUpdate(
+    {
+      _id: id,
+      owner: userId,
+    },
+    productData,
+    {
+      new: true,
+      runValidators: true,
+    }
+  ).populate('ingredients.ingredient');
 };
 
-export const deleteProduct = async (id) => {
-  return await Product.findByIdAndDelete(id);
+export const deleteProduct = async (id, userId) => {
+  return await Product.findOneAndDelete({
+    _id: id,
+    owner: userId,
+  });
 };

@@ -1,5 +1,3 @@
-// src/components/auth/AuthInput.jsx
-
 function AuthInput({
   name,
   type = 'text',
@@ -18,7 +16,7 @@ function AuthInput({
         placeholder={placeholder}
         className="
           w-full
-          rounded-full
+          rounded-(--radius-app)
           bg-white
           px-5
           py-3
@@ -27,8 +25,7 @@ function AuthInput({
           shadow-[0_4px_10px_rgba(0,0,0,0.18)]
           outline-none
           placeholder:text-[#9B8F8A]
-          focus:ring-2
-          focus:ring-[#B8C7AF]
+
         "
       />
 

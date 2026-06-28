@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa6';
 import { getIngredients } from '../../services/ingredientService';
+import { formatPrice } from '../../utils/pricing';
 
 function IngredientsForm({ onClose, onSubmit, initialValues }) {
   const [errors, setErrors] = useState({});
@@ -10,26 +11,22 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
     e.preventDefault();
 
     try {
-    await onSubmit(form);
-  } catch (error) {
-  console.log("FULL ERROR:", error.response?.data);
+      await onSubmit(form);
+    } catch (error) {
+      console.log('FULL ERROR:', error.response?.data);
 
-  const backendErrors = error.response?.data?.errors;
+      const backendErrors = error.response?.data?.errors;
 
-  const formatted = {};
+      const formatted = {};
 
-  if (backendErrors) {
-    Object.keys(backendErrors).forEach((key) => {
-      formatted[key] =
-        backendErrors[key]?.message ||
-        backendErrors[key];
-    });
-  }
+      if (backendErrors) {
+        Object.keys(backendErrors).forEach((key) => {
+          formatted[key] = backendErrors[key]?.message || backendErrors[key];
+        });
+      }
 
-  console.log("FORMATTED ERRORS:", formatted);
-
-  setErrors(formatted);
-}
+      setErrors(formatted);
+    }
   };
 
   const [form, setForm] = useState({
@@ -68,7 +65,7 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
               htmlFor="name"
               className="block text-sm/6 font-medium text-gray-900"
             >
-              Ingrediente
+              Ingrediente*
             </label>
             <div className="mt-2">
               <input
@@ -77,7 +74,8 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
                 name="name"
                 value={form.name}
                 onChange={handleChange}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className="block w-full rounded-(--radius-app) bg-white px-3 py-1.5 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6"
               />
               {errors.name && (
                 <p className="text-red-500 text-sm mt-1">{errors.name}</p>
@@ -89,7 +87,7 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
               htmlFor="quantity"
               className="block text-sm/6 font-medium text-gray-900"
             >
-              Cantidad
+              Cantidad*
             </label>
             <div className="mt-2">
               <input
@@ -98,7 +96,8 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
                 type="text"
                 value={form.quantity}
                 onChange={handleChange}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className="block w-full rounded-(--radius-app) bg-white px-3 py-1.5 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6"
               />
               {errors.quantity && (
                 <p className="text-red-500 text-sm mt-1">{errors.quantity}</p>
@@ -110,7 +109,7 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
               htmlFor="measure"
               className="block text-sm/6 font-medium text-gray-900"
             >
-              Unidad de medida
+              Unidad de medida*
             </label>
             <div className="mt-2 grid grid-cols-1">
               <select
@@ -118,7 +117,8 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
                 name="measure"
                 value={form.measure}
                 onChange={handleChange}
-                className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className="col-start-1 row-start-1 w-full appearance-none rounded-(--radius-app) bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6"
               >
                 <option value="gr">g</option>
                 <option value="kg">kg</option>
@@ -141,7 +141,7 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
               htmlFor="price"
               className="block text-sm/6 font-medium text-gray-900"
             >
-              Precio
+              Precio*
             </label>
             <div className="mt-2">
               <input
@@ -149,9 +149,10 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
                 id="price"
                 name="price"
                 min="1"
-                value={form.price}
+                value={formatPrice(form.price)}
                 onChange={handleChange}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className="block w-full rounded-(--radius-app) bg-white px-3 py-1.5 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6"
               />
               {errors.price && (
                 <p className="text-red-500 text-sm mt-1">{errors.price}</p>
@@ -160,16 +161,16 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
           </div>
         </div>
       </div>
-      <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 ">
+      <div className="bg-[#F6F1ED] px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 ">
         <button
           type="submit"
-          className="inline-flex w-full justify-center rounded-md bg-[#334C68] px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto"
+          className="inline-flex w-full justify-center rounded-(--radius-app) bg-[#334C68] px-4 py-3 text-sm font-semibold text-white shadow-xs hover:bg-[#536a86] sm:ml-3 sm:w-auto"
         >
           Guardar
         </button>
         <button
           type="button"
-          className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+          className="mt-3 inline-flex w-full justify-center rounded-(--radius-app) bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-50 sm:mt-0 sm:w-auto"
           onClick={onClose}
         >
           Cancelar

@@ -38,32 +38,41 @@ function Table({
       </div>
 
       <div className="bg-[#F2EBE6] rounded-2xl overflow-x-auto shadow-sm">
-        <div className="min-w-225">
-          <table className="w-full">
-            <thead className="bg-[#E6DDD7]">
-              <tr>
-                {columns.map((column) => (
-                  <th key={column} className="px-8 py-5 text-sm font-medium">
-                    {column}
-                  </th>
-                ))}
-              </tr>
-            </thead>
+  {data.length === 0 ? (
+    <div className="flex flex-col items-center justify-center px-6 py-20 text-center">
+      <h3 className="text-xl font-semibold text-[#334C68]">
+        No hay {type}s cargados
+      </h3>
 
-            <tbody>{data.map(renderRow)}</tbody>
-          </table>
+      <p className="mt-2 text-[#6B7280]">
+        Agregá un nuevo {type} para empezar.
+      </p>
 
-          <div className="flex w-full justify-center items-center gap-2 py-5 bg-[#E6DDD7]">
-            <button className="h-8 w-8 rounded-lg bg-[#B9C6B2] text-white">
-              1
-            </button>
-            <button className="h-8 w-8 rounded-lg bg-white hover:bg-gray-100">
-              2
-            </button>
-            <button className="h-8 w-8 rounded-lg bg-white" />
-          </div>
-        </div>
-      </div>
+      <button
+        onClick={onCreate}
+        className="mt-6 rounded-lg bg-[#5B4636] px-5 py-3 font-medium text-white"
+      >
+        Nuevo {type}
+      </button>
+    </div>
+  ) : (
+    <div className="min-w-225">
+      <table className="w-full">
+        <thead className="bg-[#E6DDD7]">
+          <tr>
+            {columns.map((column) => (
+              <th key={column} className="px-8 py-5 text-sm font-medium">
+                {column}
+              </th>
+            ))}
+          </tr>
+        </thead>
+
+        <tbody>{data.map(renderRow)}</tbody>
+      </table>
+    </div>
+  )}
+</div>
     </div>
   );
 }

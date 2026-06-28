@@ -1,10 +1,8 @@
 import * as ingredientService from '../services/ingredient.service.js';
 
-// const error = res.status(500).json({message: error.message});
-
 export const getIngredients = async (req, res) => {
   try {
-    const ingredients = await ingredientService.getIngredients();
+    const ingredients = await ingredientService.getIngredients(req.user._id);
     res.json(ingredients);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -13,8 +11,9 @@ export const getIngredients = async (req, res) => {
 
 export const getIngredient = async (req, res) => {
   try {
-    const ingredient = await ingredientService.getIngredientsById(
+    const ingredient = await ingredientService.getIngredientById(
       req.params.id,
+      req.user._id,
     );
 
     if (!ingredient) {
@@ -30,7 +29,10 @@ export const getIngredient = async (req, res) => {
 
 export const createIngredient = async (req, res) => {
   try {
-    const ingredient = await ingredientService.createIngredient(req.body);
+    const ingredient = await ingredientService.createIngredient(
+      req.body,
+      req.user._id,
+    );
     res.status(201).json(ingredient);
   } catch (error) {
     const errors = {};
@@ -49,6 +51,7 @@ export const updateIngredient = async (req, res) => {
     const ingredient = await ingredientService.updateIngredient(
       req.params.id,
       req.body,
+      req.user._id,
     );
 
     if (!ingredient) {
@@ -65,7 +68,10 @@ export const updateIngredient = async (req, res) => {
 
 export const deleteIngredient = async (req, res) => {
   try {
-    const ingredient = await ingredientService.deleteIngredient(req.params.id);
+    const ingredient = await ingredientService.deleteIngredient(
+      req.params.id,
+      req.user._id,
+    );
 
     if (!ingredient) {
       return res.status(404).json({

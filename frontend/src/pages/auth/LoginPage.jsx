@@ -1,53 +1,32 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { login } from '../../services/authService';
-import logotipo from '../../assets/logotipo.svg';
+import { Link } from 'react-router-dom';
 import AuthLayout from '../../components/layout/AuthLayout';
 import AuthCard from '../../components/layout/AuthCard';
 import AuthInput from '../../components/ui/AuthInput';
 import AuthButton from '../../components/ui/AuthButton';
+import { useLoginForm } from '../../hooks/useLoginForm';
 
 function LoginPage() {
-  const navigate = useNavigate();
-
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-  });
-
-  const [errors, setErrors] = useState({});
-  const [generalError, setGeneralError] = useState('');
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      setErrors({});
-      setGeneralError('');
-
-      await login(form);
-
-      navigate('/ingredients');
-    } catch (error) {
-      const data = error.response?.data;
-
-      setErrors(data?.errors || {});
-      setGeneralError(data?.message || 'Error al iniciar sesión');
-    }
-  };
+  const {
+    form,
+    errors,
+    generalError,
+    handleChange,
+    handleSubmit,
+  } = useLoginForm();
 
   return (
     <AuthLayout>
-      <AuthCard title="Iniciar sesión" footer="Olvidé mi contraseña">
+      <AuthCard title="Iniciar sesión" footer={
+    <>
+      ¿No tenés cuenta?{' '}
+      <Link
+        to="/register"
+        className="font-semibold text-[#334C68]"
+      >
+        Registrate
+      </Link>
+    </>
+  }>
         <form onSubmit={handleSubmit} className="space-y-5">
           
           <AuthInput

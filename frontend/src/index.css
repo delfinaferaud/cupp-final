@@ -1,8 +1,10 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200..1000&display=swap');
+
+@import 'tailwindcss';
 
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
+  --text: #334c68;
+  --text-h: #334c68;
   --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
@@ -12,13 +14,13 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --radius-app: 15px;
+  --sans: 'Nunito', sans-serif;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  font: 0.9rem/145% var(--sans);
   --mono: ui-monospace, Consolas, monospace;
   font: 0.9rem/145% var(--sans);
   letter-spacing: 0.18px;
-  /* color-scheme: light ; */
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -31,11 +33,12 @@
   }
 }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   background: var(--bg);
-} 
+}
 
 #root {
   width: 100%;

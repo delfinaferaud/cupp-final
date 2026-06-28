@@ -3,6 +3,11 @@ import productIngredientSchema from './ProductIngredient.js';
 
 const productSchema = new mongoose.Schema(
   {
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     product: {
       type: String,
       required: [true, 'El nombre del producto es obligatorio'],
@@ -21,6 +26,12 @@ const productSchema = new mongoose.Schema(
         },
         message: 'El producto debe tener al menos un ingrediente',
       },
+    },
+    salePrice: {
+      type: Number,
+      required: [true, 'El precio de venta es obligatorio'],
+      min: [0, 'El precio de venta no puede ser negativo'],
+      cast: 'El precio de venta debe ser un número',
     },
   },
   { timestamps: true },

@@ -1,144 +1,101 @@
-import { useEffect, useState } from 'react';
-import {
-  createIngredient,
-  getIngredients,
-} from '../../services/ingredientService';
-import {
-  deleteIngredient,
-  updateIngredient,
-} from '../../services/ingredientService';
 import Table from '../../components/layout/Table';
-import ActionsButtons from '../../components/ui/ActionsButtons';
 import Modal from '../../components/layout/Modal';
 import ModalForm from '../../components/layout/ModalForm';
+import { useToast } from '../../hooks/useToast';
+import Toast from '../../components/ui/Toast';
+import { useIngredientsPage } from '../../hooks/useIngredientsPage';
+import IngredientRow from '../../components/layout/IngredientsRow';
 
 function IngredientsPage() {
-  const [ingredients, setIngredients] = useState([]);
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const {
+    ingredients,
+    selectedIngredient,
 
-  useEffect(() => {
-    loadIngredients();
-  }, []);
+    isCreateOpen,
+    isEditOpen,
+    isDeleteOpen,
 
-  const handleDeleteClick = (ingredient) => {
-    setSelectedIngredient(ingredient);
-    setIsDeleteModalOpen(true);
-  };
+    toast,
 
-  const handleConfirmDelete = async () => {
-    try {
-      await deleteIngredient(selectedIngredient._id);
-      setIsDeleteModalOpen(false);
-      setSelectedIngredient(null);
-      loadIngredients();
-    } catch (error) {
-      console.error('Error eliminando ingrediente', error);
-    }
-  };
+    openCreate,
+    openEdit,
+    openDelete,
+    closeModal,
+    closeToast,
 
-  const handleCreateClick = () => {
-    setIsCreateModalOpen(true);
-  };
-  const handleNewIngredient = async (formData) => {
-    await createIngredient(formData);
+    handleNewIngredient,
+    handleConfirmEdit,
+    handleConfirmDelete,
+  } = useIngredientsPage();
 
-    setIsCreateModalOpen(false);
-    loadIngredients();
-  };
-
-  const handleEditClick = (ingredient) => {
-    setSelectedIngredient(ingredient);
-    setIsEditModalOpen(true);
-  };
-
-  const handleConfirmEdit = async (formData) => {
-    try {
-      await updateIngredient(selectedIngredient._id, formData);
-
-      setIsEditModalOpen(false);
-      setSelectedIngredient(null);
-      loadIngredients();
-    } catch (error) {
-      console.error('Error al editar ingrediente', error);
-    }
-  };
-
-  const loadIngredients = async () => {
-    try {
-      const data = await getIngredients();
-      setIngredients(data);
-    } catch (error) {
-      // TODO
-      console.error('Error al obtener ingredientes: ', error);
-    }
-  };
-
-  const columns = ['Ingrediente', 'Cantidad', 'Medida', 'Precio', 'Acciones'];
+  const columns = [
+    'Ingrediente',
+    'Cantidad',
+    'Medida',
+    'Precio (ARS)',
+    'Acciones',
+  ];
 
   const renderIngredients = (ingredient) => (
-    <tr
+    <IngredientRow
       key={ingredient._id}
-      className="border-b border-[#DDD2CB] last:border-none text-center"
-    >
-      <td className="px-8 py-10">{ingredient.name}</td>
-      <td className="px-8 py-10">{ingredient.quantity}</td>
-      <td className="px-8 py-10">{ingredient.measure}</td>
-      <td className="px-8 py-10">${ingredient.price}</td>
-      <td className="px-8">
-        <ActionsButtons
-          onEdit={() => handleEditClick(ingredient)}
-          onDelete={() => handleDeleteClick(ingredient)}
-        />
-      </td>
-    </tr>
+      ingredient={ingredient}
+      onEdit={openEdit}
+      onDelete={openDelete}
+    />
   );
+
 
   return (
     <>
       <h2>Ingredientes</h2>
       <p>Gestioná tus ingredientes.</p>
+
+      {toast && (
+        <Toast message={toast.message} type={toast.type} onClose={closeToast} />
+      )}
+
       <Table
         columns={columns}
         renderRow={renderIngredients}
         data={ingredients}
         type="ingrediente"
         typeSearch="Buscar ingrediente..."
-        onCreate={handleCreateClick}
+        onCreate={openCreate}
       />
 
-      {isDeleteModalOpen && (
+      {isDeleteOpen && (
         <Modal
-          open={isDeleteModalOpen}
+          open={isDeleteOpen}
           ingredient={selectedIngredient}
-          onClose={() => setIsDeleteModalOpen(false)}
+          onClose={closeModal}
           onConfirm={handleConfirmDelete}
+          type="ingredient"
         />
       )}
 
-      {isEditModalOpen && (
+      {isEditOpen && (
         <ModalForm
-          open={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
+          open={isEditOpen}
+          onClose={closeModal}
           formType="Editar ingrediente"
           initialValues={selectedIngredient}
           onSubmit={handleConfirmEdit}
+          formEntity="ingredient"
         />
       )}
 
-      {isCreateModalOpen && (
+      {isCreateOpen && (
         <ModalForm
-          open={isCreateModalOpen}
-          onClose={() => setIsCreateModalOpen(false)}
+          open={isCreateOpen}
+          onClose={closeModal}
           formType="Agregar nuevo ingrediente"
           initialValues={null}
           onSubmit={handleNewIngredient}
+          formEntity="ingredient"
         />
       )}
     </>
   );
 }
-
 export default IngredientsPage;

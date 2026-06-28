@@ -25,7 +25,7 @@ function Header({ onMenuClick }) {
               <IoHelpCircle size={24} className="text-[#334C68]" />
             </button>
 
-            <div className="h-10 w-10 rounded-full bg-[#334C68] text-white flex items-center justify-center font-semibold">
+            <div className="h-10 w-10 rounded-(--radius-app) bg-[#334C68] text-white flex items-center justify-center font-semibold">
               N
             </div>
           </div>
@@ -45,7 +45,7 @@ function Header({ onMenuClick }) {
           </button>
 
           <div className="flex items-center gap-3">
-            <div className="h-12 w-12 rounded-full bg-[#334C68] text-white flex items-center justify-center font-semibold">
+            <div className="h-12 w-12 rounded-(--radius-app) bg-[#334C68] text-white flex items-center justify-center font-semibold">
               N
             </div>
 

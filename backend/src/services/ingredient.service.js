@@ -1,21 +1,42 @@
-import Ingredient from "../models/Ingredient.js";
+import Ingredient from '../models/Ingredient.js';
 
-export const getIngredients = async () => {
-    return await Ingredient.find();
+export const getIngredients = async (userId) => {
+  return await Ingredient.find({
+    owner: userId,
+  });
 };
 
-export const getIngredientsById = async (id) => {
-    return await Ingredient.findById(id);
-}; 
-
-export const createIngredient = async (ingredient) => {
-    return await Ingredient.create(ingredient);
+export const getIngredientById = async (id, userId) => {
+  return await Ingredient.findOne({
+    _id: id,
+    owner: userId,
+  });
 };
 
-export const updateIngredient = async (id, ingredient) => {
-    return await Ingredient.findByIdAndUpdate(id, ingredient, {new: true});
+export const createIngredient = async (ingredient, userId) => {
+  return await Ingredient.create({
+    ...ingredient,
+    owner: userId,
+  });
 };
 
-export const deleteIngredient = async (id) => {
-    return await Ingredient.findByIdAndDelete(id);
-}
+export const updateIngredient = async (id, ingredient, userId) => {
+  return await Ingredient.findOneAndUpdate(
+    {
+      _id: id,
+      owner: userId,
+    },
+    ingredient,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+};
+
+export const deleteIngredient = async (id, userId) => {
+  return await Ingredient.findOneAndDelete({
+    _id: id,
+    owner: userId,
+  });
+};

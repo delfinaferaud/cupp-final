@@ -12,6 +12,7 @@ import { IoMenu, IoPeople } from 'react-icons/io5';
 import { FaHome, FaSignOutAlt } from 'react-icons/fa';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import logotipo from '../../assets/logotipo.svg';
+import { logout } from '../../services/authService';
 
 function Sidebar({ isOpen, onClose }) {
   const navigate = useNavigate();
@@ -19,17 +20,20 @@ function Sidebar({ isOpen, onClose }) {
 
   const menu = [
     { icon: FaHome, label: 'Inicio' },
-    { icon: FaBoxArchive, label: 'Productos', path: '/products' },
     { icon: FaEgg, label: 'Ingredientes', path: '/ingredients' },
-    { icon: FaBook, label: 'Recetas' },
-    { icon: FaCalculator, label: 'Costos' },
+    { icon: FaBoxArchive, label: 'Productos', path: '/products' },
     { icon: FaArrowTrendUp, label: 'Ventas' },
     { icon: FaCartShopping, label: 'Pedidos' },
     { icon: IoPeople, label: 'Clientes' },
     { icon: FaChartSimple, label: 'Reportes' },
     { icon: FaGear, label: 'Configuración' },
-    { icon: FaSignOutAlt, label: 'Cerrar sesión' },
+    { icon: FaSignOutAlt, label: 'Cerrar sesión', logout: true },
   ];
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <aside
@@ -67,6 +71,10 @@ function Sidebar({ isOpen, onClose }) {
             <button
               key={item.label}
               onClick={() => {
+                if (item.logout) {
+                  handleLogout();
+                  return;
+                }
                 navigate(item.path);
                 onClose?.();
               }}
