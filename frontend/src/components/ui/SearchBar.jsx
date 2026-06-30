@@ -12,9 +12,7 @@ function SearchBar({placeholder}) {
         placeholder={placeholder}
         className="
                         w-full
-                        rounded-xl
-                        border
-                        border-[#DDD2CB]
+                        rounded-(--radius-app)
                         bg-white
                         py-3
                         pl-12

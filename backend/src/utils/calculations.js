@@ -11,8 +11,10 @@ export const convertToBaseUnit = (quantity, measure) => {
 };
 
 export const calculateProductCost = (product) => {
-  return product.ingredients.reduce((total, item) => {
+  return (product.ingredients ?? []).reduce((total, item) => {
     const ingredient = item.ingredient;
+
+    if (!ingredient) return total;
 
     const ingredientBaseQuantity = convertToBaseUnit(
       ingredient.quantity,
@@ -24,12 +26,14 @@ export const calculateProductCost = (product) => {
       item.measureNeeded
     );
 
+    if (!ingredientBaseQuantity || !neededBaseQuantity) return total;
+
     const unitCost = ingredient.price / ingredientBaseQuantity;
     const itemCost = unitCost * neededBaseQuantity;
 
     return total + itemCost;
   }, 0);
-}; 
+};
 
 export const getMeasureType = (measure) => {
   const mass = ["g", "kg"];

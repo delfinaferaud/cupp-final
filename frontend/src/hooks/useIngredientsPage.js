@@ -47,19 +47,24 @@ export function useIngredientsPage() {
     }
   };
 
-  const handleConfirmDelete = async () => {
-    try {
-      await removeIngredient(selectedIngredient._id);
+const handleConfirmDelete = async () => {
+  try {
+    if (!selectedIngredient?._id) return;
 
-      closeModal();
+    await removeIngredient(selectedIngredient._id);
 
-      showToast('success', 'Ingrediente eliminado correctamente');
-    } catch (error) {
-      console.error('Error eliminando ingrediente', error);
+    closeModal();
 
-      showToast('error', 'No se pudo eliminar el ingrediente');
-    }
-  };
+    showToast('success', 'Ingrediente eliminado correctamente');
+  } catch (error) {
+    console.error('Error eliminando ingrediente', error.response?.data || error);
+
+    showToast(
+      'error',
+      error.response?.data?.message || 'No se pudo eliminar el ingrediente'
+    );
+  }
+};
 
   return {
     ingredients,

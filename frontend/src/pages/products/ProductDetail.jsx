@@ -3,9 +3,29 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getProduct } from '../../services/productService';
 import ProductCard from '../../components/layout/ProductCard';
 import { useProductDetail } from '../../hooks/useProductDetail';
+import { useProductsPage } from '../../hooks/useProductsPage';
+import Toast from '../../components/ui/Toast';
+import ModalForm from '../../components/layout/ModalForm';
+import Modal from '../../components/layout/Modal';
 
-function ProductDetail() {
- const { product, loading, goBackToProducts } = useProductDetail();
+function ProductDetail({}) {
+  const { product, loading, goBackToProducts } = useProductDetail();
+  const {
+    products,
+    selectedProduct,
+
+    isCreateOpen,
+    isEditOpen,
+    isDeleteOpen,
+
+    toast,
+    openEdit,
+    openDelete,
+    closeModal,
+    closeToast,
+    handleConfirmDelete,
+    handleConfirmEdit,
+  } = useProductsPage();
 
   if (loading) {
     return <p>Cargando producto...</p>;
@@ -16,17 +36,48 @@ function ProductDetail() {
   }
 
   return (
-    <div>
-      <button
-        type="button"
-        onClick={goBackToProducts}
-        className="mb-6 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-[#334C68] shadow-sm hover:bg-gray-50"
-      >
-        Volver a productos
-      </button>
+    <>
+      <div>
+        <button
+          type="button"
+          onClick={goBackToProducts}
+          className="mb-6 rounded-(--radius-app) bg-white px-4 py-2 text-sm font-semibold text-[#334C68] shadow-sm hover:bg-gray-50"
+        >
+          Volver a productos
+        </button>
 
-      <ProductCard product={product} />
-    </div>
+        <ProductCard
+          product={product}
+          onEdit={openEdit}
+          onDelete={openDelete}
+        />
+      </div>
+
+      {toast && (
+        <Toast message={toast.message} type={toast.type} onClose={closeToast} />
+      )}
+
+      {isEditOpen && (
+        <ModalForm
+          open={isEditOpen}
+          onClose={closeModal}
+          formType="Editar producto"
+          initialValues={selectedProduct}
+          onSubmit={handleConfirmEdit}
+          formEntity="product"
+        />
+      )}
+
+      {isDeleteOpen && (
+        <Modal
+          open={isDeleteOpen}
+          item={selectedProduct}
+          onClose={closeModal}
+          onConfirm={handleConfirmDelete}
+          type="product"
+        />
+      )}
+    </>
   );
 }
 

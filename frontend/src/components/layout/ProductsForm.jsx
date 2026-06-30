@@ -36,7 +36,8 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
                 name="product"
                 value={form.product}
                 onChange={handleChange}
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-[#334C68] sm:text-sm/6"
+                className="block w-full rounded-(--radius-app) bg-white px-3 py-1.5 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6"
               />
 
               {errors.product && (
@@ -59,7 +60,8 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
                 name="category"
                 value={form.category}
                 onChange={handleChange}
-                className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className="col-start-1 row-start-1 w-full appearance-none rounded-(--radius-app) bg-white px-3 py-1.5 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6"
               >
                 <option value="Tortas">Tortas</option>
                 <option value="Postres">Postres</option>
@@ -86,7 +88,7 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
               <button
                 type="button"
                 onClick={handleAddIngredient}
-                className="rounded-md bg-[#B9C6B2] px-3 py-2 text-sm font-semibold text-[#334C68] hover:bg-[#a8b89f]"
+                className="rounded-(--radius-app) bg-[#B9C6B2] py-3 px-5 text-sm font-semibold text-[#334C68] hover:bg-[#a8b89f]"
               >
                 Agregar ingrediente
               </button>
@@ -98,7 +100,7 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
 
             <div className="mt-4 space-y-4">
               {form.ingredients.length === 0 && (
-                <div className="rounded-lg border border-dashed border-gray-300 bg-white px-4 py-6 text-center text-sm text-gray-500">
+                <div className="rounded-(--radius-app)  bg-white px-4 py-6 text-center text-sm text-gray-500">
                   Todavía no agregaste ingredientes.
                 </div>
               )}
@@ -106,11 +108,11 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
               {form.ingredients.map((item, index) => (
                 <div
                   key={index}
-                  className="grid grid-cols-1 gap-4 rounded-xl bg-[#F6F1ED] p-4 sm:grid-cols-12"
+                  className="grid grid-cols-1 gap-4 rounded-(--radius-app) bg-[#F6F1ED] p-4 sm:grid-cols-12"
                 >
                   <div className="sm:col-span-5">
                     <label className="block text-sm font-medium text-gray-700">
-                      Ingrediente
+                      Ingrediente*
                     </label>
 
                     <div className="relative mt-2">
@@ -123,7 +125,8 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
                             e.target.value,
                           )
                         }
-                        className="w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-sm text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-[#334C68]"
+                        className="col-start-1 row-start-1 w-full appearance-none rounded-(--radius-app) bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6"
                       >
                         <option value="">Seleccionar</option>
 
@@ -146,7 +149,7 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
 
                   <div className="sm:col-span-3">
                     <label className="block text-sm font-medium text-gray-700">
-                      Cantidad
+                      Cantidad*
                     </label>
 
                     <input
@@ -161,7 +164,8 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
                           e.target.value,
                         )
                       }
-                      className="mt-2 block w-full rounded-md bg-white px-3 py-2 text-sm text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-[#334C68]"
+                      className="mt-2 block w-full rounded-(--radius-app) bg-white px-3 py-1.5 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6"
                     />
 
                     {errors[`ingredients.${index}.quantityNeeded`] && (
@@ -172,7 +176,7 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
                   </div>
                   <div className="sm:col-span-3">
                     <label className="block text-sm font-medium text-gray-700">
-                      Medida
+                      Medida*
                     </label>
 
                     <div className="relative mt-2">
@@ -185,7 +189,8 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
                             e.target.value,
                           )
                         }
-                        className="w-full appearance-none rounded-md bg-white py-2 pr-8 pl-3 text-sm text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-[#334C68]"
+                        className="col-start-1 row-start-1 w-full appearance-none rounded-(--radius-app) bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6"
                       >
                         <option value="g">g</option>
                         <option value="kg">kg</option>
@@ -208,7 +213,7 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
                     <button
                       type="button"
                       onClick={() => handleRemoveIngredient(index)}
-                      className="flex h-10 w-10 items-center justify-center rounded-md text-red-600 hover:bg-red-200"
+                      className="flex h-10 w-10 items-center justify-center rounded-(--radius-app) text-red-600 hover:bg-red-200"
                     >
                       <FaTrash />
                     </button>
@@ -216,13 +221,14 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
                 </div>
               ))}
 
-              <div className="grid grid-cols-1 gap-4 rounded-xl bg-[#E6DDD7] p-5 sm:grid-cols-3">
+              <div className="grid grid-cols-1 gap-4 rounded-(--radius-app) bg-[#E6DDD7] p-5 sm:grid-cols-3">
                 <div className="mx-auto flex w-full max-w-42.5 flex-col">
                   <label className="flex h-12 items-start text-sm font-medium text-gray-900">
                     Costo calculado
                   </label>
 
-                  <div className="flex h-12 items-center rounded-md bg-white px-4 text-sm font-semibold text-[#334C68]">
+                  <div className="flex h-12 items-center w-full rounded-(--radius-app) bg-white px-3 py-1.5 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6">
                     ${productCost ? productCost.toFixed(2) : 0}
                   </div>
                 </div>
@@ -232,7 +238,7 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
                     htmlFor="profitMargin"
                     className="flex h-12 items-start text-sm font-medium text-gray-900"
                   >
-                    Margen de ganancia %
+                    Margen de ganancia %*
                   </label>
 
                   <input
@@ -243,7 +249,8 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
                     min="0"
                     value={form.profitMargin}
                     onChange={handleProfitMarginChange}
-                    className="h-12 w-full rounded-md bg-white px-4 text-sm text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-[#334C68]"
+                    className="flex h-12 items-center w-full rounded-(--radius-app) bg-white px-3 py-1.5 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6"
                   />
                 </div>
 
@@ -263,7 +270,8 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
                     min="0"
                     value={form.salePrice}
                     onChange={handleSalePriceChange}
-                    className="h-12 w-full rounded-md bg-white px-4 text-sm text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-[#334C68]"
+                    className="flex h-12 items-center w-full rounded-(--radius-app) bg-white px-3 py-1.5 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
+          outline-none sm:text-sm/6"
                   />
                   {errors.salePrice && (
                     <p className="mt-1 text-sm text-red-500">
@@ -280,14 +288,14 @@ function ProductsForm({ onClose, onSubmit, initialValues }) {
       <div className="bg-[#F6F1ED] px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
         <button
           type="submit"
-          className="inline-flex w-full justify-center rounded-md bg-[#334C68] px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-[#536a86] sm:ml-3 sm:w-auto"
+          className="inline-flex w-full justify-center rounded-(--radius-app) bg-[#334C68] px-4 py-3 text-sm font-semibold text-white shadow-xs hover:bg-[#536a86] sm:ml-3 sm:w-auto"
         >
           Guardar
         </button>
 
         <button
           type="button"
-          className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-50 sm:mt-0 sm:w-auto"
+          className="mt-3 inline-flex w-full justify-center rounded-(--radius-app) bg-white px-4 py-3 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-50 sm:mt-0 sm:w-auto"
           onClick={onClose}
         >
           Cancelar

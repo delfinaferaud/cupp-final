@@ -85,7 +85,7 @@ function Sidebar({ isOpen, onClose }) {
                   gap-4
                   px-4
                   py-3
-                  rounded-xl
+                  rounded-(--radius-app)
                   transition
                   ${
                     isActive
@@ -100,7 +100,7 @@ function Sidebar({ isOpen, onClose }) {
           );
         })}
       </nav>
-      <div className="mx-4 mb-5 mt-auto shrink-0 rounded-3xl bg-[#F3DDD6] p-5">
+      <div className="mx-4 mb-5 mt-auto shrink-0 rounded-(--radius-app) bg-[#E8CFC8] p-5">
         <h3 className="font-semibold">Plan profesional</h3>
 
         <p className="text-sm text-gray-500 mt-1">Tu plan actual</p>

@@ -3,7 +3,7 @@ import ActionsButtons from "../ui/ActionsButtons";
 
 function IngredientRow({ ingredient, onEdit, onDelete }) {
   return (
-    <tr className="border-b border-[#DDD2CB] last:border-none text-center">
+    <tr className=" text-center">
       <td className="px-8 py-10">{ingredient.name}</td>
       <td className="px-8 py-10">{ingredient.quantity}</td>
       <td className="px-8 py-10">{ingredient.measure}</td>

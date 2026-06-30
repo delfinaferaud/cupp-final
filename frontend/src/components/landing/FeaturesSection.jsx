@@ -35,7 +35,7 @@ function FeaturesSection() {
     },
     {
       icon: FaChartSimple,
-      title: 'Estadísticas en tiempo real',
+      title: 'Consultá estadísticas',
       text: 'Tomá decisiones basadas en datos.',
       bg: 'bg-[#E8CFC8]',
     },
@@ -48,9 +48,9 @@ function FeaturesSection() {
   ];
 
   return (
-    <section className="py-16">
+    <section className="py-16 relative z-10">
       <div className="mx-auto max-w-7xl px-18">
-        <h2 className="text-center text-3xl font-extrabold text-[#334C68] md:text-4xl">
+        <h2 className="text-3xl font-extrabold text-[#334C68] md:text-4xl">
           Todo lo que necesitás para administrar tu negocio
         </h2>
 
@@ -68,7 +68,6 @@ function FeaturesSection() {
                 >
                   <Icon className="text-2xl text-[#5B4636]" />
                 </div>
-
                 <div>
                   <h3 className="text-lg font-extrabold text-[#1F1F1F]">
                     {feature.title}

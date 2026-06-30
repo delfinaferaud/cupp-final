@@ -19,25 +19,25 @@ function Table({
 
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:flex-nowrap">
           {showCategories && (
-            <button className="h-10 rounded-lg px-4 bg-[#B9C6B2] text-[#334C68] font-medium flex items-center justify-center gap-3 whitespace-nowrap">
+            <button className="h-10 rounded-(--radius-app) px-4 bg-[#B9C6B2] text-[#334C68] font-medium flex items-center justify-center gap-3 whitespace-nowrap">
               Todas las categorías <FaChevronDown />
             </button>
           )}
 
-          <button className="h-10 rounded-lg px-4 bg-[#B9C6B2] text-[#334C68] font-medium flex items-center justify-center gap-3 whitespace-nowrap">
+          <button className="h-10 rounded-(--radius-app) px-4 bg-[#B9C6B2] text-[#334C68] font-medium flex items-center justify-center gap-3 whitespace-nowrap">
             Filtros <FaFilter />
           </button>
 
           <button
             onClick={onCreate}
-            className="h-10 rounded-lg px-4 bg-[#5B4636] text-white font-medium flex items-center justify-center gap-3 whitespace-nowrap"
+            className="h-10 rounded-(--radius-app) px-4 bg-[#5B4636] text-white font-medium flex items-center justify-center gap-3 whitespace-nowrap"
           >
             Nuevo {type}
           </button>
         </div>
       </div>
 
-      <div className="bg-[#F2EBE6] rounded-2xl overflow-x-auto shadow-sm">
+      <div className="bg-[#F2EBE6] rounded-(--radius-app) overflow-x-auto shadow-sm">
   {data.length === 0 ? (
     <div className="flex flex-col items-center justify-center px-6 py-20 text-center">
       <h3 className="text-xl font-semibold text-[#334C68]">
@@ -50,7 +50,7 @@ function Table({
 
       <button
         onClick={onCreate}
-        className="mt-6 rounded-lg bg-[#5B4636] px-5 py-3 font-medium text-white"
+        className="mt-6 rounded-(--radius-app) bg-[#5B4636] px-5 py-3 font-medium text-white"
       >
         Nuevo {type}
       </button>

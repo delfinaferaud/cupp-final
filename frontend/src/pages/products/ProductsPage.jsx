@@ -4,6 +4,7 @@ import Modal from '../../components/layout/Modal';
 import { formatPrice } from '../../utils/pricing';
 import { useProductsPage } from '../../hooks/useProductsPage';
 import ProductRow from '../../components/layout/ProductRow';
+import Toast from '../../components/ui/Toast';
 
 function ProductsPage() {
   const {

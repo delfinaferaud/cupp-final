@@ -149,7 +149,7 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
                 id="price"
                 name="price"
                 min="1"
-                value={formatPrice(form.price)}
+                value={form.price}
                 onChange={handleChange}
                 className="block w-full rounded-(--radius-app) bg-white px-3 py-1.5 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
           outline-none sm:text-sm/6"

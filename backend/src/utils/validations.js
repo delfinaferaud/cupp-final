@@ -50,17 +50,33 @@ export const validateCompatibleMeasures = (product) => {
   product.ingredients.forEach((item) => {
     const ingredient = item.ingredient;
 
-    const ingredientMeasureType = getMeasureType(ingredient.measure);
-    const neededMeasureType = getMeasureType(item.measureNeeded);
+    if (!ingredient) return;
 
-    if (ingredientMeasureType !== neededMeasureType) {
+    const ingredientMeasure = ingredient.measure;
+    const neededMeasure = item.measureNeeded;
+
+    const weightMeasures = ['g', 'kg'];
+    const volumeMeasures = ['ml', 'l'];
+
+    const areBothWeight =
+      weightMeasures.includes(ingredientMeasure) &&
+      weightMeasures.includes(neededMeasure);
+
+    const areBothVolume =
+      volumeMeasures.includes(ingredientMeasure) &&
+      volumeMeasures.includes(neededMeasure);
+
+    const areBothUnit =
+      ingredientMeasure === 'unidad' && neededMeasure === 'unidad';
+
+    if (!areBothWeight && !areBothVolume && !areBothUnit) {
       const error = new Error(
-        `La unidad de ${ingredient.name} no es compatible`,
+        `La medida del ingrediente no es compatible con la medida necesaria`
       );
 
       error.statusCode = 400;
       error.errors = {
-        ingredients: `La unidad de ${ingredient.name} no es compatible`,
+        ingredients: `La medida del ingrediente no es compatible con la medida necesaria`,
       };
 
       throw error;

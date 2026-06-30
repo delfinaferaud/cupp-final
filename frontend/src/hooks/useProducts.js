@@ -10,7 +10,7 @@ export function useProducts() {
   const [products, setProducts] = useState([]);
 
   const loadProducts = useCallback(async () => {
-    const data = await getProducts();  
+    const data = await getProducts();
     setProducts(data);
   }, []);
 
@@ -18,26 +18,26 @@ export function useProducts() {
     loadProducts();
   }, [loadProducts]);
 
-  const createNewProduct  = async (formData) => {
-    await createProduct (formData);
+  const createNewProduct = async (formData) => {
+    await createProduct(formData);
     await loadProducts();
   };
 
-  const editProduct  = async (id, formData) => {
-    await updateProduct (id, formData);
+  const editProduct = async (id, formData) => {
+    await updateProduct(id, formData);
     await loadProducts();
   };
 
-  const removeProduct  = async (id) => {
-    await deleteProduct (id);
+  const removeProduct = async (id) => {
+    await deleteProduct(id);
     await loadProducts();
   };
 
   return {
     products,
     loadProducts,
-    createNewProduct ,
-    editProduct ,
-    removeProduct ,
+    createNewProduct,
+    editProduct,
+    removeProduct,
   };
-} 
+}

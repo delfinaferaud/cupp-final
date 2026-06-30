@@ -5,7 +5,7 @@ function AuthButton({ children, type = 'submit', onClick }) {
       onClick={onClick}
       className="
         w-full
-        rounded-full
+        rounded-(--radius-app)
         bg-[#5B4636]
         py-3
         font-semibold

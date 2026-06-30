@@ -1,4 +1,5 @@
 import Ingredient from '../models/Ingredient.js';
+import Product from '../models/Product.js';
 
 export const getIngredients = async (userId) => {
   return await Ingredient.find({
@@ -35,8 +36,26 @@ export const updateIngredient = async (id, ingredient, userId) => {
 };
 
 export const deleteIngredient = async (id, userId) => {
+  const isUsedInProduct = await Product.exists({
+    owner: userId,
+    'ingredients.ingredient': id,
+  });
+
+  if (isUsedInProduct) {
+    const error = new Error(
+      'No se puede eliminar este ingrediente porque está siendo usado en uno o más productos'
+    );
+
+    error.statusCode = 400;
+    error.errors = {
+      ingredient: 'Este ingrediente está siendo usado en productos',
+    };
+
+    throw error;
+  }
+
   return await Ingredient.findOneAndDelete({
     _id: id,
     owner: userId,
   });
-};
+}; 

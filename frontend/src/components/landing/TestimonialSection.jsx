@@ -5,8 +5,8 @@ function TestimonialSection() {
   return (
     <section className="relative py-1 z-10">
       
-      <div className="mx-auto max-w-7xl px-18">
-        <div className="relative overflow-hidden rounded-(--radius-app) bg-[#B8C7AF] py-8">
+      <div className="mx-auto max-w-7xl px-18 ">
+        <div className="relative overflow-hidden rounded-(--radius-app) bg-[#B8C7AF] py-8 shadow-[0_8px_20px_rgba(0,0,0,0.08)]">
           <div className="flex flex-col items-center gap-8 md:flex-row md:justify-center">
             <div className="text-9xl font-extrabold leading-none text-[#7F9478]">
               “

@@ -5,14 +5,15 @@ function CallToAction() {
         <Link
           to="/register"
           className="
-            rounded-full
+            rounded-(--radius-app)
             bg-[#5B4636]
             px-8
             py-4
             font-semibold
             text-white
             transition
-            hover:opacity-90
+            hover:bg-[#665447]
+            shadow-[0_8px_20px_rgba(0,0,0,0.08)]
           "
         >
           Probar gratis

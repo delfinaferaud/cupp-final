@@ -11,7 +11,7 @@ function Toast({ message, type = 'success', onClose }) {
         top-6
         right-6
         z-999
-        rounded-xl
+        rounded-(--radius-app)
         px-5
         py-4
         shadow-lg

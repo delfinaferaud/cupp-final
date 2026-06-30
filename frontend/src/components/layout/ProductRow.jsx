@@ -13,7 +13,7 @@ function ProductRow({ product, onView, onEdit, onDelete }) {
   };
 
   return (
-    <tr className="border-b border-[#DDD2CB] last:border-none text-center">
+    <tr className=" last:border-none text-center">
       <td className="px-8 py-10">{product.product}</td>
       <td className="px-8 py-10">{product.category}</td>
       <td className="px-8 py-10">{formatPrice(product.cost)}</td>

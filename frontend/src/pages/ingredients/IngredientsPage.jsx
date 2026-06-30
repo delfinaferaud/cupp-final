@@ -67,7 +67,7 @@ function IngredientsPage() {
       {isDeleteOpen && (
         <Modal
           open={isDeleteOpen}
-          ingredient={selectedIngredient}
+          item={selectedIngredient}
           onClose={closeModal}
           onConfirm={handleConfirmDelete}
           type="ingredient"

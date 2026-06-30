@@ -15,14 +15,12 @@ function ActionsButtons({onView, onEdit, onDelete}) {
           className="
       h-9
       w-9
-      rounded-md
-        bg-slate-600
+      rounded-(--radius-app)
+        bg-[#364A5E]
         text-white
         flex
         items-center
         justify-center
-        hover:bg-slate-700
-        transition
         "
         >
           <EyeIcon className="size-6"/>
@@ -34,14 +32,12 @@ function ActionsButtons({onView, onEdit, onDelete}) {
           className="
         h-9
         w-9
-        rounded-md
-        bg-slate-600
+        rounded-(--radius-app)
+        bg-[#364A5E]
         text-white
         flex
         items-center
         justify-center
-        hover:bg-slate-700
-        transition
         "
         >
           <PencilIcon className="size-6"/>
@@ -54,14 +50,12 @@ function ActionsButtons({onView, onEdit, onDelete}) {
           className="
         h-9
         w-9
-        rounded-md
-        bg-slate-600
+        rounded-(--radius-app)
+        bg-[#364A5E]
         text-white
         flex
         items-center
         justify-center
-        hover:bg-slate-700 
-        transition
         "
         >
             <XCircleIcon className="size-6"/>
