@@ -55,7 +55,7 @@ function Sidebar({ isOpen, onClose }) {
     lg:overflow-visible
   `}
     >
-      <div className="h-28 shrink-0  flex items-center px-5 gap-3 lg:justify-center border-b border-[#DDD2CB]">
+      <div className="h-28 shrink-0 flex items-center px-5 gap-3 lg:justify-center border-b border-[#DDD2CB]">
         <button onClick={onClose} className="lg:hidden p-2">
           <IoMenu size={30} />
         </button>

@@ -5,7 +5,7 @@ import { calculateProfitMargin, calculateSalePrice } from '../utils/pricing';
 
 const buildInitialForm = (initialValues) => ({
   product: initialValues?.product ?? '',
-  category: initialValues?.category ?? '',
+  category: initialValues?.category ?? 'Tortas',
   salePrice: initialValues?.salePrice ?? '',
   profitMargin: '',
   ingredients:
@@ -83,16 +83,6 @@ export function useProductForm({ initialValues, onSubmit }) {
         };
       }
 
-      if (priceSource === 'price' && prev.salePrice !== '') {
-        return {
-          ...prev,
-          profitMargin: calculateProfitMargin(
-            productCost,
-            Number(prev.salePrice),
-          ),
-        };
-      }
-
       return prev;
     });
   }, [productCost, priceSource]);
@@ -164,9 +154,7 @@ export function useProductForm({ initialValues, onSubmit }) {
       ...prev,
       salePrice: price,
       profitMargin:
-        price === ''
-          ? ''
-          : calculateProfitMargin(productCost, Number(price)),
+        price === '' ? '' : calculateProfitMargin(productCost, Number(price)),
     }));
   };
 

@@ -12,7 +12,6 @@ function ProductCard({ product, onEdit, onDelete }) {
             <div className="flex h-14 w-14 items-center justify-center rounded-(--radius-app) bg-[#B8C7AF] text-[#334C68]">
               <FaBoxArchive size={24} />
             </div>
-
             <div>
               <h2 className="text-2xl font-bold text-[#334C68]">
                 {product.product}
