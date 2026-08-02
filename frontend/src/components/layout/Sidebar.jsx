@@ -12,11 +12,12 @@ import { IoMenu, IoPeople } from 'react-icons/io5';
 import { FaHome, FaSignOutAlt } from 'react-icons/fa';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import logotipo from '../../assets/logotipo.svg';
-import { logout } from '../../services/authService';
+import { useAuth } from '../../context/AuthContext';
 
 function Sidebar({ isOpen, onClose }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth();
 
   const menu = [
     { icon: FaHome, label: 'Inicio' },
