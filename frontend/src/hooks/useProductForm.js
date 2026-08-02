@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { getIngredients } from '../services/ingredientService';
 import { calculateProductCost } from '../utils/productCalculations';
 import { calculateProfitMargin, calculateSalePrice } from '../utils/pricing';
@@ -48,6 +48,9 @@ export function useProductForm({ initialValues, onSubmit }) {
     initialValues?.salePrice ? 'price' : 'margin',
   );
 
+  const initialMarginLoaded = useRef(false);
+  const productId = initialValues?._id ?? null;
+
   const [form, setForm] = useState(() => buildInitialForm(initialValues));
 
   useEffect(() => {
@@ -63,29 +66,52 @@ export function useProductForm({ initialValues, onSubmit }) {
     loadIngredients();
   }, []);
 
-  useEffect(() => {
-    setForm(buildInitialForm(initialValues));
-    setPriceSource(initialValues?.salePrice ? 'price' : 'margin');
-  }, [initialValues]);
+useEffect(() => {
+  setForm(buildInitialForm(initialValues));
+  setPriceSource(initialValues?.salePrice ? 'price' : 'margin');
+  initialMarginLoaded.current = false;
+  previousCost.current = null;
+}, [initialValues?._id]);
 
   const productCost = useMemo(() => {
     return calculateProductCost(form.ingredients, availableIngredients);
   }, [form.ingredients, availableIngredients]);
 
   useEffect(() => {
-    if (!productCost) return;
+  if (!productId) return;
+  if (initialMarginLoaded.current) return;
+  if (!productCost) return;
+  if (!form.salePrice) return;
 
-    setForm((prev) => {
-      if (priceSource === 'margin' && prev.profitMargin !== '') {
-        return {
-          ...prev,
-          salePrice: calculateSalePrice(productCost, prev.profitMargin),
-        };
-      }
+  initialMarginLoaded.current = true;
 
-      return prev;
-    });
-  }, [productCost, priceSource]);
+  setForm((prev) => ({
+    ...prev,
+    profitMargin: calculateProfitMargin(productCost, Number(prev.salePrice)),
+  }));
+}, [productId, productCost, form.salePrice]);
+
+  const previousCost = useRef(null);
+
+useEffect(() => {
+  if (!productCost) return;
+
+  const costChanged =
+    previousCost.current !== null && previousCost.current !== productCost;
+
+  previousCost.current = productCost;
+
+  if (!costChanged) return;
+
+  setForm((prev) => {
+    if (prev.profitMargin === '') return prev;
+
+    return {
+      ...prev,
+      salePrice: calculateSalePrice(productCost, prev.profitMargin),
+    };
+  });
+}, [productCost]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

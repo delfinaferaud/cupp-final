@@ -7,25 +7,28 @@ import { useProductsPage } from '../../hooks/useProductsPage';
 import Toast from '../../components/ui/Toast';
 import ModalForm from '../../components/layout/ModalForm';
 import Modal from '../../components/layout/Modal';
+import { useProductDetailPage } from '../../hooks/useProductDetailPage';
 
 function ProductDetail({}) {
-  const { product, loading, goBackToProducts } = useProductDetail();
   const {
-    products,
-    selectedProduct,
+    product,
+    loading,
 
-    isCreateOpen,
+    selectedProduct,
     isEditOpen,
     isDeleteOpen,
 
     toast,
+
     openEdit,
     openDelete,
     closeModal,
     closeToast,
-    handleConfirmDelete,
+
     handleConfirmEdit,
-  } = useProductsPage();
+    handleConfirmDelete,
+    goBackToProducts,
+  } = useProductDetailPage();
 
   if (loading) {
     return <p>Cargando producto...</p>;

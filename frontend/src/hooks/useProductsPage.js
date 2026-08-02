@@ -1,7 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import { useProducts } from "./useProducts";
-import { useCrudModals } from "./useCrudModals";
-import { useToast } from "./useToast";
+import { useNavigate } from 'react-router-dom';
+import { useProducts } from './useProducts';
+import { useCrudModals } from './useCrudModals';
+import { useToast } from './useToast';
+import { useProductDetail } from './useProductDetail';
 
 export function useProductsPage() {
   const navigate = useNavigate();

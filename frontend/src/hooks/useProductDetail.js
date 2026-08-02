@@ -34,6 +34,7 @@ export function useProductDetail() {
   return {
     product,
     loading,
+    loadProduct,
     goBackToProducts,
   };
 }

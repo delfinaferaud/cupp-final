@@ -120,7 +120,7 @@ function IngredientsForm({ onClose, onSubmit, initialValues }) {
                 className="col-start-1 row-start-1 w-full appearance-none rounded-(--radius-app) bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]
           outline-none sm:text-sm/6"
               >
-                <option value="gr">g</option>
+                <option value="g">g</option>
                 <option value="kg">kg</option>
                 <option value="ml">ml</option>
                 <option value="l">l</option>

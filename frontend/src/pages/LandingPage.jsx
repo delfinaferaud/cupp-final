@@ -9,19 +9,42 @@ import blob2 from '../assets/blob-2.svg';
 
 function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#F6F1ED] overflow-x-hidden">
-      <div className="absolute -top-24 -right-24 h-100 w-200 opacity-64">
-        <img src={blob1} alt="Blob" />
+    <div className="relative min-h-screen bg-[#F6F1ED] overflow-x-clip">
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <img
+          src={blob1}
+          alt=""
+          className="
+            absolute
+            -top-24
+            -right-24
+            h-[400px]
+            w-[800px]
+            object-contain
+            opacity-60
+          "
+        />
+
+        <img
+          src={blob2}
+          alt=""
+          className="
+            absolute
+            top-10
+            -left-60
+            opacity-40
+          "
+        />
       </div>
-      <div className="absolute bottom-20 -left-60 h-80 w-170 opacity-50">
-        <img src={blob2} alt="Blob" />
+
+      <div className="relative z-10">
+        <NavBarLanding />
+        <HeroSection />
+        <FeaturesSection />
+        <TestimonialSection />
+        <CTASection />
+        <Footer />
       </div>
-      <NavBarLanding />
-      <HeroSection />
-      <FeaturesSection />
-      <TestimonialSection />
-      <CTASection />
-      <Footer />
     </div>
   );
 }
