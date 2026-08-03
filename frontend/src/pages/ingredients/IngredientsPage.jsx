@@ -9,6 +9,7 @@ import IngredientRow from '../../components/layout/IngredientsRow';
 function IngredientsPage() {
   const {
     ingredients,
+    loading,
     selectedIngredient,
 
     isCreateOpen,
@@ -45,7 +46,6 @@ function IngredientsPage() {
     />
   );
 
-
   return (
     <>
       <h2>Ingredientes</h2>
@@ -62,6 +62,7 @@ function IngredientsPage() {
         type="ingrediente"
         typeSearch="Buscar ingrediente..."
         onCreate={openCreate}
+        isLoading={loading}
       />
 
       {isDeleteOpen && (

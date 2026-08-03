@@ -6,29 +6,29 @@ import AuthButton from '../../components/ui/AuthButton';
 import { useLoginForm } from '../../hooks/useLoginForm';
 
 function LoginPage() {
-  const {
-    form,
-    errors,
-    generalError,
-    handleChange,
-    handleSubmit,
-  } = useLoginForm();
+  const { form, errors, generalError, handleChange, handleSubmit } =
+    useLoginForm();
 
   return (
     <AuthLayout>
-      <AuthCard title="Iniciar sesión" footer={
-    <>
-      ¿No tenés cuenta?{' '}
-      <Link
-        to="/register"
-        className="font-semibold text-[#334C68]"
+      <AuthCard
+        title="Iniciar sesión"
+        footer={
+          <>
+            ¿No tenés cuenta?{' '}
+            <Link to="/register" className="font-semibold text-[#334C68]">
+              Registrate
+            </Link>
+          </>
+        }
       >
-        Registrate
-      </Link>
-    </>
-  }>
         <form onSubmit={handleSubmit} className="space-y-5">
-          
+          {generalError && (
+            <div className="rounded-(--radius-app) border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              {generalError}
+            </div>
+          )}
+
           <AuthInput
             name="email"
             type="email"

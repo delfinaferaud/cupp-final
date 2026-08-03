@@ -9,6 +9,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import LandingPage from '../pages/LandingPage';
 import AdminHome from '../pages/admin/AdminHome';
+import NotFoundPage from '../pages/NotFoundPage';
 
 function AppRouter() {
   return (
@@ -45,6 +46,8 @@ function AppRouter() {
         <Route path="products" element={<ProductsPage />} />
         <Route path="products/:id" element={<ProductDetail />} />
       </Route>
+
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

@@ -1,10 +1,15 @@
-import { useCrudModals } from "./useCrudModals";
-import { useIngredients } from "./useIngredients";
-import { useToast } from "./useToast";
+import { useCrudModals } from './useCrudModals';
+import { useIngredients } from './useIngredients';
+import { useToast } from './useToast';
 
 export function useIngredientsPage() {
-  const { ingredients, createNewIngredient, editIngredient, removeIngredient } =
-    useIngredients();
+  const {
+    ingredients,
+    loading,
+    createNewIngredient,
+    editIngredient,
+    removeIngredient,
+  } = useIngredients();
 
   const {
     selectedItem: selectedIngredient,
@@ -47,27 +52,31 @@ export function useIngredientsPage() {
     }
   };
 
-const handleConfirmDelete = async () => {
-  try {
-    if (!selectedIngredient?._id) return;
+  const handleConfirmDelete = async () => {
+    try {
+      if (!selectedIngredient?._id) return;
 
-    await removeIngredient(selectedIngredient._id);
+      await removeIngredient(selectedIngredient._id);
 
-    closeModal();
+      closeModal();
 
-    showToast('success', 'Ingrediente eliminado correctamente');
-  } catch (error) {
-    console.error('Error eliminando ingrediente', error.response?.data || error);
+      showToast('success', 'Ingrediente eliminado correctamente');
+    } catch (error) {
+      console.error(
+        'Error eliminando ingrediente',
+        error.response?.data || error,
+      );
 
-    showToast(
-      'error',
-      error.response?.data?.message || 'No se pudo eliminar el ingrediente'
-    );
-  }
-};
+      showToast(
+        'error',
+        error.response?.data?.message || 'No se pudo eliminar el ingrediente',
+      );
+    }
+  };
 
   return {
     ingredients,
+    loading,
     selectedIngredient,
 
     isCreateOpen,

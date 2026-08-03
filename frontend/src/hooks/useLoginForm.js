@@ -26,18 +26,34 @@ export function useLoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const nextErrors = {};
+
+    if (!form.email.trim()) {
+      nextErrors.email = 'El email es obligatorio';
+    }
+
+    if (!form.password.trim()) {
+      nextErrors.password = 'La contraseña es obligatoria';
+    }
+
+    setErrors(nextErrors);
+    setGeneralError('');
+
+    if (Object.keys(nextErrors).length > 0) {
+      return;
+    }
+
     try {
-      setErrors({});
-      setGeneralError('');
-
       await login(form);
-
-      navigate('/ingredients');
+      navigate('/admin');
     } catch (error) {
       const data = error.response?.data;
+      const serverErrors = data?.errors || {};
 
-      setErrors(data?.errors || {});
-      setGeneralError(data?.message || 'Error al iniciar sesión');
+      setErrors(serverErrors);
+      setGeneralError(
+        data?.message || 'Email o contraseña incorrectos. Intentá nuevamente.',
+      );
     }
   };
 

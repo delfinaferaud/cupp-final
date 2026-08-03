@@ -9,6 +9,7 @@ import Toast from '../../components/ui/Toast';
 function ProductsPage() {
   const {
     products,
+    loading,
     selectedProduct,
 
     isCreateOpen,
@@ -50,13 +51,9 @@ function ProductsPage() {
   return (
     <>
       <h2>Productos</h2>
-      <p>Gestioná todos los productos de tu inventario.</p> 
+      <p>Gestioná todos los productos de tu inventario.</p>
       {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={closeToast}
-        />
+        <Toast message={toast.message} type={toast.type} onClose={closeToast} />
       )}
 
       <Table
@@ -66,7 +63,8 @@ function ProductsPage() {
         type="producto"
         typeSearch="Buscar producto..."
         onCreate={openCreate}
-        showCategories={true} 
+        showCategories={true}
+        isLoading={loading}
       />
 
       {isCreateOpen && (

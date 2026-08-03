@@ -9,6 +9,7 @@ function Table({
   typeSearch,
   onCreate,
   showCategories = false,
+  isLoading = false,
 }) {
   return (
     <div>
@@ -38,41 +39,51 @@ function Table({
       </div>
 
       <div className="bg-[#F2EBE6] rounded-(--radius-app) overflow-x-auto shadow-sm">
-  {data.length === 0 ? (
-    <div className="flex flex-col items-center justify-center px-6 py-20 text-center">
-      <h3 className="text-xl font-semibold text-[#334C68]">
-        No hay {type}s cargados
-      </h3>
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center px-6 py-20 text-center">
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#B9C6B2] border-t-[#5B4636]" />
+            <h3 className="mt-4 text-xl font-semibold text-[#334C68]">
+              Cargando {type}s...
+            </h3>
+            <p className="mt-2 text-[#6B7280]">
+              Estamos obteniendo tus datos actuales.
+            </p>
+          </div>
+        ) : data.length === 0 ? (
+          <div className="flex flex-col items-center justify-center px-6 py-20 text-center">
+            <h3 className="text-xl font-semibold text-[#334C68]">
+              No hay {type}s cargados
+            </h3>
 
-      <p className="mt-2 text-[#6B7280]">
-        Agregá un nuevo {type} para empezar.
-      </p>
+            <p className="mt-2 text-[#6B7280]">
+              Agregá un nuevo {type} para empezar.
+            </p>
 
-      <button
-        onClick={onCreate}
-        className="mt-6 rounded-(--radius-app) bg-[#5B4636] px-5 py-3 font-medium text-white"
-      >
-        Nuevo {type}
-      </button>
-    </div>
-  ) : (
-    <div className="min-w-225">
-      <table className="w-full">
-        <thead className="bg-[#E6DDD7]">
-          <tr>
-            {columns.map((column) => (
-              <th key={column} className="px-8 py-5 text-sm font-medium">
-                {column}
-              </th>
-            ))}
-          </tr>
-        </thead>
+            <button
+              onClick={onCreate}
+              className="mt-6 rounded-(--radius-app) bg-[#5B4636] px-5 py-3 font-medium text-white"
+            >
+              Nuevo {type}
+            </button>
+          </div>
+        ) : (
+          <div className="min-w-225">
+            <table className="w-full">
+              <thead className="bg-[#E6DDD7]">
+                <tr>
+                  {columns.map((column) => (
+                    <th key={column} className="px-8 py-5 text-sm font-medium">
+                      {column}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
 
-        <tbody>{data.map(renderRow)}</tbody>
-      </table>
-    </div>
-  )}
-</div>
+              <tbody>{data.map(renderRow)}</tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

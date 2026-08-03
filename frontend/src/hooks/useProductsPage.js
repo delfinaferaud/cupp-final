@@ -7,7 +7,7 @@ import { useProductDetail } from './useProductDetail';
 export function useProductsPage() {
   const navigate = useNavigate();
 
-  const { products, createNewProduct, editProduct, removeProduct } =
+  const { products, loading, createNewProduct, editProduct, removeProduct } =
     useProducts();
 
   const {
@@ -71,6 +71,7 @@ export function useProductsPage() {
 
   return {
     products,
+    loading,
     selectedProduct,
 
     isCreateOpen,

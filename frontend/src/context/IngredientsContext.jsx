@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { useAuth } from './AuthContext';
 import {
   createIngredient,
   deleteIngredient,
@@ -9,16 +17,32 @@ import {
 const IngredientsContext = createContext(null);
 
 export function IngredientsProvider({ children }) {
+  const { user, token } = useAuth();
   const [ingredients, setIngredients] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const loadIngredients = useCallback(async () => {
-    const data = await getIngredients();
-    setIngredients(data);
+    try {
+      setLoading(true);
+      const data = await getIngredients();
+      setIngredients(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Error cargando ingredientes:', error);
+      setIngredients([]);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
+    if (!token || !user?._id) {
+      setIngredients([]);
+      setLoading(false);
+      return;
+    }
+
     loadIngredients();
-  }, [loadIngredients]);
+  }, [token, user?._id, loadIngredients]);
 
   const createNewIngredient = async (formData) => {
     await createIngredient(formData);
@@ -38,16 +62,19 @@ export function IngredientsProvider({ children }) {
   const value = useMemo(
     () => ({
       ingredients,
+      loading,
       loadIngredients,
       createNewIngredient,
       editIngredient,
       removeIngredient,
     }),
-    [ingredients, loadIngredients]
+    [ingredients, loading, loadIngredients],
   );
 
   return (
-    <IngredientsContext.Provider value={value}>{children}</IngredientsContext.Provider>
+    <IngredientsContext.Provider value={value}>
+      {children}
+    </IngredientsContext.Provider>
   );
 }
 
@@ -55,7 +82,9 @@ export function useIngredientsContext() {
   const context = useContext(IngredientsContext);
 
   if (!context) {
-    throw new Error('useIngredientsContext debe usarse dentro de IngredientsProvider');
+    throw new Error(
+      'useIngredientsContext debe usarse dentro de IngredientsProvider',
+    );
   }
 
   return context;
