@@ -24,7 +24,7 @@ export function useProductsPage() {
   const { toast, showToast, closeToast } = useToast();
 
   const handleViewProduct = (product) => {
-    navigate(`/products/${product._id}`);
+    navigate(`/admin/products/${product._id}`);
   };
 
   const handleNewProduct = async (formData) => {

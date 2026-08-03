@@ -1,14 +1,14 @@
 import { FaTiktok } from 'react-icons/fa6';
-import { AiFillInstagram, AiFillTikTok } from "react-icons/ai";
+import { AiFillInstagram, AiFillTikTok } from 'react-icons/ai';
 import logo from '../../assets/logotipo.svg';
 
 function Footer() {
   return (
-    <footer className="bg-[#F6F1ED] pt-10 pb-8">
-      <div className="mx-auto max-w-7xl px-18 pt-8">
-        <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between mb-8">
+    <footer className="bg-[#F6F1ED] px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
+      <div className="mx-auto w-full max-w-6xl">
+        <div className="mb-8 flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div>
-            <img src={logo} alt="Cupp" className="h-10 w-auto mb-8" />
+            <img src={logo} alt="Cupp" className="mb-8 h-10 w-auto" />
             <p className="mt-4 max-w-xs font-semibold text-[#334C68]">
               Gestioná costos, productos y ganancias desde una sola plataforma.
             </p>
@@ -38,11 +38,11 @@ function Footer() {
               <h3 className="font-extrabold text-[#334C68]">Seguinos</h3>
               <div className="mt-4 flex gap-3">
                 <a className="text-[#5B4636]">
-                  <AiFillInstagram size={26}/>
+                  <AiFillInstagram size={26} />
                 </a>
 
                 <a className="text-[#5B4636]">
-                  <AiFillTikTok size={26}/>
+                  <AiFillTikTok size={26} />
                 </a>
               </div>
             </div>

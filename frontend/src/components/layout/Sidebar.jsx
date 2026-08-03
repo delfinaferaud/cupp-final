@@ -20,9 +20,9 @@ function Sidebar({ isOpen, onClose }) {
   const { logout } = useAuth();
 
   const menu = [
-    { icon: FaHome, label: 'Inicio' },
-    { icon: FaEgg, label: 'Ingredientes', path: '/ingredients' },
-    { icon: FaBoxArchive, label: 'Productos', path: '/products' },
+    { icon: FaHome, label: 'Inicio', path: '/admin' },
+    { icon: FaEgg, label: 'Ingredientes', path: '/admin/ingredients' },
+    { icon: FaBoxArchive, label: 'Productos', path: '/admin/products' },
     { icon: FaArrowTrendUp, label: 'Ventas' },
     { icon: FaCartShopping, label: 'Pedidos' },
     { icon: IoPeople, label: 'Clientes' },

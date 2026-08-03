@@ -28,7 +28,7 @@ export function useProductDetail() {
   }, [id]);
 
   const goBackToProducts = () => {
-    navigate('/products');
+    navigate('/admin/products');
   };
 
   return {
