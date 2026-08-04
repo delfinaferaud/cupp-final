@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://cupp-final.onrender.com/"
+    baseURL: "https://cupp-final.onrender.com/api"
 });
 
 api.interceptors.request.use((config) => {
